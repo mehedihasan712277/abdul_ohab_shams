@@ -8,27 +8,40 @@
 /* ====================== THEME ====================== */
 @theme {
     /* ── Custom semantic colors ── */
-    --color-brand: oklch(0.623 0.214 259.8); /* your brand/accent color */
-    --color-background: oklch(1 0 0); /* bg-main     (light) */
-    --color-foreground: oklch(0.2 0.01 240); /* text-main   (light) */
-    --color-muted: oklch(0.97 0.005 240); /* bg-soft     (light) */
-    --color-muted-foreground: oklch(0.5 0.02 240); /* text-soft   (light) */
-    --color-border: oklch(0.92 0.01 240); /* border      (light) */
+    /* Brand is now a vibrant violet gradient */
+    --color-brand-start: oklch(0.65 0.25 270); /* Bright violet */
+    --color-brand-end: oklch(0.55 0.28 300); /* Deeper magenta-violet */
 
-    /* ── Custom breakpoints (always use rem!) ── */
-    --breakpoint-xs: 30rem; /* 480px  - extra small */
-    --breakpoint-3xl: 120rem; /* 1920px - extra large */
+    /* Alternative single brand color (for text/icons where gradient isn't suitable) */
+    --color-brand: oklch(0.6 0.26 285);
+
+    /* Backgrounds */
+    --color-bg-main: oklch(1 0 0);
+    --color-bg-soft: oklch(0.97 0.005 240);
+    --color-border: oklch(0.92 0.01 240);
+
+    /* Grid */
+    --color-grid: oklch(0.92 0.01 240); /* light mode subtle grid */
+
+    /* Text */
+    --color-text-primary: oklch(0.13 0.01 240);
+    --color-text-secondary: oklch(0.4 0.015 240);
+    --color-text-muted: oklch(0.58 0.012 240);
+    --color-text-disabled: oklch(0.75 0.008 240);
+    --color-text-inverse: oklch(0.98 0 0);
+
+    /* ── Custom breakpoints ── */
+    --breakpoint-xs: 30rem;
+    --breakpoint-3xl: 120rem;
+
+    /* ── Brand Gradient (for backgrounds) ── */
+    --background-image-brand-gradient: linear-gradient(135deg, var(--color-brand-start), var(--color-brand-end));
 }
 
-/* ====================== FONTS (from next/font) ====================== */
+/* ====================== FONTS ====================== */
 @theme inline {
-    /* Outfit becomes the default sans font (so font-sans works naturally) */
     --font-sans: var(--font-outfit), system-ui, sans-serif;
-
-    /* Montserrat - secondary font (perfect for headings, logos, accents) */
     --font-montserrat: var(--font-montserrat), system-ui, sans-serif;
-
-    /* Keep Outfit as explicit class too */
     --font-outfit: var(--font-outfit), system-ui, sans-serif;
 }
 
@@ -39,21 +52,38 @@
     }
 
     .dark {
-        --color-background: oklch(0.145 0.01 240);
-        --color-foreground: oklch(0.98 0.005 240);
-        --color-muted: oklch(0.21 0.01 240);
-        --color-muted-foreground: oklch(0.65 0.02 240);
+        /* Backgrounds */
+        --color-bg-main: oklch(0.145 0.01 240);
+        --color-bg-soft: oklch(0.21 0.01 240);
         --color-border: oklch(0.3 0.01 240);
-        /* brand stays the same across modes */
+
+        /* Text */
+        --color-text-primary: oklch(0.95 0.005 240);
+        --color-text-secondary: oklch(0.72 0.012 240);
+        --color-text-muted: oklch(0.55 0.01 240);
+        --color-text-disabled: oklch(0.38 0.008 240);
+        --color-text-inverse: oklch(0.13 0.01 240);
+
+        /* Brand gradient stays vibrant in dark mode too */
     }
 
-    /* Global base styles */
     body {
-        @apply bg-background text-foreground antialiased;
+        @apply bg-bg-main text-text-primary antialiased;
         font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     }
 
     html {
         scroll-behavior: smooth;
+    }
+
+    .hero-grid-bg {
+        background-color: var(--color-bg-main);
+        background-image:
+            linear-gradient(to right, var(--color-grid) 1px, transparent 1px), linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
+        background-size: 40px 40px; /* adjust spacing - 30px, 40px, or 50px */
+    }
+
+    .dark .hero-grid-bg {
+        --color-grid: oklch(0.35 0.01 240); /* darker grid in dark mode */
     }
 }
